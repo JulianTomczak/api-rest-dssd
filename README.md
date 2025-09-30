@@ -1,3 +1,6 @@
-# api-rest-dssd
+Inicializar proyecto
 
-levantar app: mvn spring-boot:run
+mvn clean install
+mvn spring-boot:run
+
+Acceso local: http://localhost:8080
