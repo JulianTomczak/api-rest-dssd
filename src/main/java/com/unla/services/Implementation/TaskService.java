@@ -74,6 +74,9 @@ public class TaskService implements ITaskService {
         task.setTitle(actualizacion.getTitle());
         task.setDescription(actualizacion.getDescription());
         task.setCompleted(actualizacion.getCompleted());
+        if (!actualizacion.getDueDate().equals(task.getDueDate())) {
+            validateDueDate(actualizacion.getDueDate());
+        }
         task.setDueDate(actualizacion.getDueDate());
         return taskRepository.save(task);
     }
@@ -93,10 +96,18 @@ public class TaskService implements ITaskService {
         }
 
         if (actualizacion.hasDueDate()) {
+            if (!actualizacion.getDueDate().equals(task.getDueDate())) {
+                validateDueDate(actualizacion.getDueDate());
+            }
             task.setDueDate(actualizacion.getDueDate());
         }
 
         return taskRepository.save(task);
     }
 
+    private void validateDueDate(LocalDate dueDate) {
+        if (dueDate.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("La fecha límite debe ser presente o futura");
+        }
+    }
 }

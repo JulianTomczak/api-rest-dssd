@@ -2,7 +2,6 @@ package com.unla.dtos;
 
 import java.time.LocalDate;
 
-import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +17,6 @@ public class TaskUpdateDTO {
 
     private Boolean completed;
 
-    @FutureOrPresent(message = "La fecha limite debe ser presente o futura")
     private LocalDate dueDate;
 
     public boolean hasTitle() {
