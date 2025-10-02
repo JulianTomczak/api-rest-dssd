@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.unla.dtos.TaskUpdateDTO;
 import com.unla.entities.Task;
 import com.unla.repositories.TaskRepository;
 import com.unla.services.ITaskService;
@@ -66,6 +67,36 @@ public class TaskService implements ITaskService {
         }
 
         return taskRepository.findAll(spec, pageable);
+    }
+
+    @Override
+    public Task actualizar(Task task, TaskUpdateDTO actualizacion) {
+        task.setTitle(actualizacion.getTitle());
+        task.setDescription(actualizacion.getDescription());
+        task.setCompleted(actualizacion.getCompleted());
+        task.setDueDate(actualizacion.getDueDate());
+        return taskRepository.save(task);
+    }
+
+    @Override
+    public Task patch(Task task, TaskUpdateDTO actualizacion) {
+        if (actualizacion.hasTitle()) {
+            task.setTitle(actualizacion.getTitle());
+        }
+
+        if (actualizacion.hasDescription()) {
+            task.setDescription(actualizacion.getDescription());
+        }
+
+        if (actualizacion.hasCompleted()) {
+            task.setCompleted(actualizacion.getCompleted());
+        }
+
+        if (actualizacion.hasDueDate()) {
+            task.setDueDate(actualizacion.getDueDate());
+        }
+
+        return taskRepository.save(task);
     }
 
 }

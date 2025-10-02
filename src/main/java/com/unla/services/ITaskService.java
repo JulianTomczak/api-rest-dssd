@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.unla.dtos.TaskUpdateDTO;
 import com.unla.entities.Task;
 
 public interface ITaskService {
@@ -18,6 +19,10 @@ public interface ITaskService {
     public Task crear(Task tarea);
 
     public void eliminar(Integer id);
+
+    public Task actualizar(Task task, TaskUpdateDTO actualizacion);
+
+    public Task patch(Task task, TaskUpdateDTO actualizacion);
 
     public Page<Task> buscarConFiltros(String title, Boolean completed, LocalDate dueBefore, Integer userId,
             Pageable pageable);
