@@ -64,4 +64,9 @@ public class UserService implements IUserService, UserDetailsService {
         return userRepository.findByMail(mail);
     }
 
+    @Override
+    public User actualizar(User user) {
+        return userRepository.save(user);
+    }
+
 }

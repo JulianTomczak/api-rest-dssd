@@ -13,4 +13,5 @@ public interface IUserService {
     public User crear(User usuario);
     public void eliminar(Integer id);
     public Optional<User> findByMail(String mail);
+    public User actualizar(User user);
 }

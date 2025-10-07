@@ -205,7 +205,7 @@ public class TaskController {
 
     private TaskResponseDTO mapToResponseDTO(Task task) {
         User user = task.getUser();
-        UserResponseDTO userDTO = new UserResponseDTO(user.getId(), user.getName(), user.getMail());
+        UserResponseDTO userDTO = new UserResponseDTO(user.getId(), user.getName(), user.getMail(), user.getRole());
 
         return new TaskResponseDTO(
                 task.getId(),

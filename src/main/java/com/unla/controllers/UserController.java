@@ -1,5 +1,7 @@
 package com.unla.controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,6 +72,27 @@ public class UserController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> actualizar(
+            @PathVariable Integer id,
+            @Valid @RequestBody UserRequestDTO dto) {
+        Optional<User> optionalUsuario = userService.findById(id);
+
+        if (optionalUsuario.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        User usuarioExistente = optionalUsuario.get();
+        usuarioExistente.setName(dto.getName());
+        usuarioExistente.setMail(dto.getMail());
+        usuarioExistente.setPassword(passwordEncoder.encode(dto.getPassword()));
+        usuarioExistente.setRole(User.Role.valueOf(dto.getRole()));
+
+        User actualizado = userService.actualizar(usuarioExistente);
+
+        return ResponseEntity.ok(mapToResponseDTO(actualizado));
+    }
+
     private User mapToEntity(UserRequestDTO dto) {
         User user = new User();
         user.setName(dto.getName());
@@ -79,6 +103,6 @@ public class UserController {
     }
 
     private UserResponseDTO mapToResponseDTO(User user) {
-        return new UserResponseDTO(user.getId(), user.getName(), user.getMail());
+        return new UserResponseDTO(user.getId(), user.getName(), user.getMail(), user.getRole());
     }
 }
