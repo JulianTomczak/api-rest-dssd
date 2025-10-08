@@ -21,4 +21,7 @@ Datos de login:
 "username":"test@example.com",
 "password":"Contraseña123"
 
+Swagger:
+
+http://localhost:8080/swagger-ui/index.html
 
